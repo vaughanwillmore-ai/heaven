@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prime Minister</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0e1116;
+      color: #e6e8eb;
+    }
+
+    .screen {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    h2 {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .meta {
+      color: #9aa1a9;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .option {
+      border: 1px solid #2f353d;
+      padding: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background: #161a21;
+    }
+
+    /* OPENING SCREEN */
+
+    .launch-title {
+      font-size: 34px;
+      letter-spacing: 0.04em;
+      margin-top: 96px;
+    }
+
+    .launch-subtitle {
+      font-size: 15px;
+      color: #9aa1a9;
+      margin-top: 8px;
+    }
+
+    .launch-divider {
+      width: 120px;
+      height: 1px;
+      background: #2a2f36;
+      margin: 32px 0 80px 0;
+    }
+
+    .launch-button {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #2f353d;
+      text-align: center;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+    }
+
+    .launch-button:hover {
+      background: #161a21;
+    }
+
+    .launch-note {
+      font-size: 12px;
+      color: #6f7680;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- OPENING SCREEN -->
+<div class="screen active" id="launch" style="display:block;">
+  <div class="launch-title">PRIME MINISTER</div>
+  <div class="launch-subtitle">A decision-driven simulation</div>
+
+  <div class="launch-divider"></div>
+
+  <div class="launch-button" onclick="goTo('crisis1')">
+    ENTER DOWNING STREET
+  </div>
+
+  <div class="launch-note">Session data is recorded</div>
+</div>
+
+<!-- CRISIS ONE -->
+<div class="screen" id="crisis1">
+  <div class="meta">Tuesday · 08:12 · 10 Downing Street</div>
+  <h2>Overnight Channel Incident</h2>
+
+  <p>
+    At 03:40, a small vessel carrying approximately 47 people capsized in the Channel
+    after entering UK waters. One fatality has been confirmed.
+  </p>
+
+  <p>
+    Video footage is circulating. Media outlets are requesting comment.
+    The Home Secretary asks for guidance.
+  </p>
+
+  <div class="option" onclick="choose('Joint international line')">
+    Issue a joint statement with France and announce a review
+  </div>
+
+  <div class="option" onclick="choose('Enforcement signal')">
+    Announce immediate reinforcement of Channel enforcement
+  </div>
+
+  <div class="option" onclick="choose('Procedural delay')">
+    Make no public comment until facts are established
+  </div>
+
+  <div class="option" onclick="choose('Human emphasis')">
+    Express regret and announce a humanitarian review
+  </div>
+</div>
+
+<!-- CRISIS TWO -->
+<div class="screen" id="crisis2">
+  <div class="meta">10:06 · 10 Downing Street</div>
+  <h2>Morning Media Round</h2>
+
+  <p>
+    Coverage is dominated by the overnight incident.
+    The Prime Minister’s absence from early interviews has been noted.
+  </p>
+
+  <div class="option" onclick="choose('Delegate media')">
+    Authorise the Home Secretary to handle appearances
+  </div>
+
+  <div class="option" onclick="choose('Written statement')">
+    Issue a short written statement from Downing Street
+  </div>
+
+  <div class="option" onclick="choose('Appear personally')">
+    Appear personally at the midday briefing
+  </div>
+
+  <div class="option" onclick="choose('No engagement')">
+    Decline media engagement entirely
+  </div>
+</div>
+
+<!-- END SCREEN -->
+<div class="screen" id="end">
+  <h2>End of Run</h2>
+  <p class="meta">Internal note</p>
+  <p id="summary"></p>
+</div>
+
+<script>
+  let decisions = [];
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function choose(choice) {
+    decisions.push(choice);
+
+    if (decisions.length === 1) {
+      goTo('crisis2');
+    } else {
+      document.getElementById('summary').innerText =
+        "You tended to prioritise " + decisions.join(" → ").toLowerCase() + ".";
+      goTo('end');
+    }
+  }
+</script>
+
+</body>
+</html>
